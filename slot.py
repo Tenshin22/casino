@@ -244,6 +244,10 @@ while True:
         input("Каждая попытка стоит 15💸\n1.Продолжить\n2.Уйти\nНажмите, цифру: ")
     )
     if coins >= 15 and user_choice == 1:
+        list_droppeds_symbols_1.clear()
+        list_droppeds_symbols_2.clear()
+        list_droppeds_symbols_3.clear()
+
         coins = coins - 15
         coins = play(
             coins,
