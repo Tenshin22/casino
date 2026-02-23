@@ -222,6 +222,8 @@ def get_users_coins() -> list[str]:
 
 # переменные
 coins = 50
+COST = 15
+end_reason = None  # "cashout" | "bust"
 
 
 # пользыватель вводит свой ник
@@ -240,33 +242,43 @@ else:
 
 # цикл игры
 while True:
-    user_choice = int(
-        input("Каждая попытка стоит 15💸\n1.Продолжить\n2.Уйти\nНажмите, цифру: ")
+    list_droppeds_symbols_1.clear()
+    list_droppeds_symbols_2.clear()
+    list_droppeds_symbols_3.clear()
+    
+    # 1) Жёсткое правило: если денег меньше стоимости попытки — конец, меню не показываем
+    if coins < COST:
+        coins = 0                 # по твоим правилам "всё потерял"
+        end_reason = "bust"
+        break
+
+    cmd = input(f"Попытка {COST}💸. Enter — крутить, $ — забрать: ").strip()
+
+    if cmd == "$":
+        end_reason = "cashout"
+        break
+
+    if cmd != "":
+        print("Нужно нажать Enter (крутить) или ввести $ (забрать).\n")
+        continue
+    
+    coins -= COST
+    coins = play(
+        coins,
+        symbols,
+        list_droppeds_symbols_1,
+        list_droppeds_symbols_2,
+        list_droppeds_symbols_3,
+        user_name,
     )
-    if coins >= 15 and user_choice == 1:
-        list_droppeds_symbols_1.clear()
-        list_droppeds_symbols_2.clear()
-        list_droppeds_symbols_3.clear()
+    
+# 2) ЕДИНСТВЕННОЕ место финализации
+if end_reason == "cashout":
+    print(f"{user_name}, вы забрали выигрыш: {coins}")
 
-        coins = coins - 15
-        coins = play(
-            coins,
-            symbols,
-            list_droppeds_symbols_1,
-            list_droppeds_symbols_2,
-            list_droppeds_symbols_3,
-            user_name,
-        )
-    elif user_choice == 2:
-        print(f"{user_name} вот ваш выйгрыш.\n В размере {coins}")
+    list_users_coins: list[str] = get_users_coins()
+    recording_names(user_name, list_users_names)
+    recording_coins(coins, list_users_coins, list_users_names, user_name)
 
-        # читаем файл с рельтатами играков
-        list_users_coins: list[str] = get_users_coins()
-        print("list_users_coins:", list_users_coins)
-
-        recording_names(user_name, list_users_names)
-        recording_coins(coins, list_users_coins, list_users_names, user_name)
-        exit()
-    else:
-        print(f"{user_name} у вас закончились деньги на игру")
-        exit()
+elif end_reason == "bust":
+    print(f"{user_name}, денег меньше {COST} — вы не успели забрать и потеряли")
