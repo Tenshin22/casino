@@ -245,10 +245,10 @@ while True:
     list_droppeds_symbols_1.clear()
     list_droppeds_symbols_2.clear()
     list_droppeds_symbols_3.clear()
-    
+
     # 1) Жёсткое правило: если денег меньше стоимости попытки — конец, меню не показываем
     if coins < COST:
-        coins = 0                 # по твоим правилам "всё потерял"
+        coins = 0  # по твоим правилам "всё потерял"
         end_reason = "bust"
         break
 
@@ -261,7 +261,7 @@ while True:
     if cmd != "":
         print("Нужно нажать Enter (крутить) или ввести $ (забрать).\n")
         continue
-    
+
     coins -= COST
     coins = play(
         coins,
@@ -271,7 +271,7 @@ while True:
         list_droppeds_symbols_3,
         user_name,
     )
-    
+
 # 2) ЕДИНСТВЕННОЕ место финализации
 if end_reason == "cashout":
     print(f"{user_name}, вы забрали выигрыш: {coins}")
