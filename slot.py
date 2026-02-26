@@ -40,7 +40,7 @@ def symbols_cosino(symbols, droppeds_symbols):
 
 
 # проверка на выйгрыш по гаризонтали
-def cheak_on_win(coins, droppeds_symbols):
+def check_on_win(coins, droppeds_symbols):
     if (
         droppeds_symbols[0] == droppeds_symbols[1]
         and droppeds_symbols[0] == droppeds_symbols[2]
@@ -60,7 +60,7 @@ def cheak_on_win(coins, droppeds_symbols):
 
 
 # проверка на выйгрыш по диагонали
-def cheak_diagonally(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
+def check_diagonally(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
     if (
         droppeds_symbols_1[2] == droppeds_symbols_2[1]
         and droppeds_symbols_1[2] == droppeds_symbols_3[0]
@@ -80,7 +80,7 @@ def cheak_diagonally(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_sym
 
 
 # проверка на выйгрыш по вертикали
-def cheak_vertically(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
+def check_vertically(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
     if (
         droppeds_symbols_1[0] == droppeds_symbols_2[0]
         and droppeds_symbols_1[0] == droppeds_symbols_3[0]
@@ -124,15 +124,15 @@ def play(
         symbols, droppeds_symbols=list_droppeds_symbols_3
     )
 
-    coins = cheak_on_win(coins, droppeds_symbols=droppeds_symbols_1)
-    coins = cheak_on_win(coins, droppeds_symbols=droppeds_symbols_2)
-    coins = cheak_on_win(coins, droppeds_symbols=droppeds_symbols_3)
+    coins = check_on_win(coins, droppeds_symbols=droppeds_symbols_1)
+    coins = check_on_win(coins, droppeds_symbols=droppeds_symbols_2)
+    coins = check_on_win(coins, droppeds_symbols=droppeds_symbols_3)
 
-    coins = cheak_diagonally(
+    coins = check_diagonally(
         coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3
     )
 
-    coins = cheak_vertically(
+    coins = check_vertically(
         coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3
     )
 
