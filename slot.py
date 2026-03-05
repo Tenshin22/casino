@@ -40,69 +40,65 @@ def symbols_cosino(symbols, droppeds_symbols):
 
 
 # проверка на выйгрыш по гаризонтали
-def check_on_win(coins, droppeds_symbols):
+def check_on_win(droppeds_symbols):
     if (
         droppeds_symbols[0] == droppeds_symbols[1]
         and droppeds_symbols[0] == droppeds_symbols[2]
     ):
-        print("+20💸")
-        coins += 20
+        coins = 20
     elif droppeds_symbols[0] == droppeds_symbols[1]:
-        print("+5💸")
-        coins += 5
+        coins = 5
     elif droppeds_symbols[2] == droppeds_symbols[1]:
-        print("+5💸")
-        coins += 5
+        coins = 5
     else:
-        print("+0💸")
+        coins = 0
 
     return coins
 
 
 # проверка на выйгрыш по диагонали
-def check_diagonally(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
+def check_diagonally(droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
     if (
         droppeds_symbols_1[2] == droppeds_symbols_2[1]
         and droppeds_symbols_1[2] == droppeds_symbols_3[0]
     ):
-        print("+30💸")
-        coins += 30
+        coins = 30
     elif (
         droppeds_symbols_1[0] == droppeds_symbols_2[1]
         and droppeds_symbols_1[0] == droppeds_symbols_3[2]
     ):
-        print("+30💸")
-        coins += 30
+        coins = 30
     else:
-        print("+0💸")
+        coins = 0
 
     return coins
 
 
 # проверка на выйгрыш по вертикали
-def check_vertically(coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
+def check_vertically(droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3):
     if (
         droppeds_symbols_1[0] == droppeds_symbols_2[0]
         and droppeds_symbols_1[0] == droppeds_symbols_3[0]
     ):
-        print("+25💸")
-        coins += 25
+        coins = 25
     elif (
         droppeds_symbols_1[1] == droppeds_symbols_2[1]
         and droppeds_symbols_1[1] == droppeds_symbols_3[1]
     ):
-        print("+25💸")
-        coins += 25
+        coins = 25
     elif (
         droppeds_symbols_1[2] == droppeds_symbols_2[2]
         and droppeds_symbols_1[2] == droppeds_symbols_3[2]
     ):
-        print("+25💸")
-        coins += 25
+        coins = 25
     else:
-        print("+0💸")
+        coins = 0
 
     return coins
+
+
+def show_spin_result(coins):
+    print(f"+{coins}💸")
 
 
 # игра
@@ -124,17 +120,23 @@ def play(
         symbols, droppeds_symbols=list_droppeds_symbols_3
     )
 
-    coins = check_on_win(coins, droppeds_symbols=droppeds_symbols_1)
-    coins = check_on_win(coins, droppeds_symbols=droppeds_symbols_2)
-    coins = check_on_win(coins, droppeds_symbols=droppeds_symbols_3)
+    prize = check_on_win(droppeds_symbols=droppeds_symbols_1)
+    show_spin_result(coins=prize)
+    coins += prize
+    prize = check_on_win(droppeds_symbols=droppeds_symbols_2)
+    show_spin_result(coins=prize)
+    coins += prize
+    prize = check_on_win(droppeds_symbols=droppeds_symbols_3)
+    show_spin_result(coins=prize)
+    coins += prize
 
-    coins = check_diagonally(
-        coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3
-    )
+    prize = check_diagonally(droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3)
+    show_spin_result(coins=prize)
+    coins += prize
 
-    coins = check_vertically(
-        coins, droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3
-    )
+    prize = check_vertically(droppeds_symbols_1, droppeds_symbols_2, droppeds_symbols_3)
+    show_spin_result(coins=prize)
+    coins += prize
 
     print(f"{user_name} у вас {coins}")
 
